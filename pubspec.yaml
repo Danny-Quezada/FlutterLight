@@ -17,6 +17,8 @@ dependencies:
   provider: ^6.1.1
   resizable_widget: ^1.0.5
   multi_split_view: ^2.4.0
+  dynamic_widget: ^5.0.0
+ 
 
 dev_dependencies:
   flutter_test:

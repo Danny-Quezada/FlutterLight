@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_drop/providers/ui_provider.dart';
+import 'package:flutter_drag_drop/ui/widgets/phone_widget.dart';
+import 'package:flutter_drag_drop/ui/widgets/property_widget.dart';
+import 'package:flutter_drag_drop/ui/widgets/tools_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
@@ -10,7 +13,6 @@ class PrincipalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final uiProvider = Provider.of<UIProvider>(context, listen: false);
     MultiSplitView multiSplitView = MultiSplitView(
-      children: [ToolsWidget(), PhoneWidget(), PropertyWidget()],
       initialAreas: [
         Area(
           weight: uiProvider.toolsWidth,
@@ -22,6 +24,7 @@ class PrincipalPage extends StatelessWidget {
           minimalWeight: uiProvider.propertyWidth,
         ),
       ],
+      children: [ToolsWidget(), PhoneWidget(), PropertyWidget()],
     );
 
     MultiSplitViewTheme theme = MultiSplitViewTheme(
@@ -37,62 +40,4 @@ class PrincipalPage extends StatelessWidget {
   }
 }
 
-class ToolsWidget extends StatelessWidget {
-  ToolsWidget({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    final uiProvider = Provider.of<UIProvider>(context, listen: false);
-    return Container(
-      color: Colors.white60,
-    );
-  }
-}
-
-class PhoneWidget extends StatelessWidget {
-  const PhoneWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white60,
-    );
-  }
-}
-
-class PropertyWidget extends StatelessWidget {
-  const PropertyWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white60,
-    );
-  }
-}
-
-class LayoutWidgetContainer extends StatelessWidget {
-  const LayoutWidgetContainer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
-        itemCount: 6,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            return Text("Layout");
-          }
-          return Container(
-            color: Colors.blue,
-          );
-        },
-      ),
-    );
-  }
-}
