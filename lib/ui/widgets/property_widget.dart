@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class PropertyWidget extends StatelessWidget {
@@ -8,6 +7,7 @@ class PropertyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white60,
+     
     );
   }
 }
