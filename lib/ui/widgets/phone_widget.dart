@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dynamic_widget/dynamic_widget.dart';
+
 import 'package:flutter_drag_drop/providers/phone_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PhoneWidget extends StatelessWidget {
   const PhoneWidget({super.key});
@@ -10,44 +11,27 @@ class PhoneWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final phoneProvider = Provider.of<PhoneProvider>(context, listen: false);
     return Container(
-        color: Colors.white60,
+        color: const Color(0xfff4f8fc),
         child: Center(
-          child: Container(
-            child: DragTarget<String>(
-              onAccept: (data) {
-                phoneProvider.changeValue(data);
-              },
-              builder: (
-                BuildContext context,
-                List<dynamic> accepted,
-                List<dynamic> rejected,
-              ) {
-                return Consumer<PhoneProvider>(
-                  builder: (context, value, child) {
-                    return DynamicWidgetBuilder.build(
-                        value.value == ""
-                            ? '''{"type": "Center", "child": {"type": "Text", "data": "Choose widgets!"}}'''
-                            : value.value,
-                        context,
-                        DefaultClickListener())!;
-                  },
-                );
-              },
+            child: Stack(
+          children: [
+            SvgPicture.asset(
+              "assets/images/svg/phone.svg",
+              height: 627,
+              width: 299.74,
             ),
-            width: 390,
-            height: 590,
-            decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.black),
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-        ));
-  }
-}
-
-class DefaultClickListener implements ClickListener {
-  @override
-  void onClicked(String? event) {
-    // TODO: implement onClicked
+            Positioned(
+              top: 28,
+              left: 9.80,
+              child: Container(
+                width: 278.74,
+                height: 576,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+            )
+          ],
+        )));
   }
 }

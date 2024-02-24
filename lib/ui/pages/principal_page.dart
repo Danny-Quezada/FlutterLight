@@ -18,7 +18,10 @@ class PrincipalPage extends StatelessWidget {
           weight: uiProvider.toolsWidth,
           minimalWeight: uiProvider.toolsWidth,
         ),
-        Area(),
+        Area(
+          minimalSize: 299.74,
+         
+        ),
         Area(
           weight: uiProvider.propertyWidth,
           minimalWeight: uiProvider.propertyWidth,
@@ -39,5 +42,3 @@ class PrincipalPage extends StatelessWidget {
     return Scaffold(body: theme);
   }
 }
-
-

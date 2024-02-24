@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_drop/providers/ui_provider.dart';
 import 'package:flutter_drag_drop/ui/enum/widget_enum.dart';
+import 'package:flutter_drag_drop/ui/widgets/secondary/text_widget.dart';
 import 'package:flutter_drag_drop/ui/widgets/secondary/tool_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,6 @@ class ToolsWidget extends StatelessWidget {
     return Container(
         color: Colors.white60,
         child: ToolWidget(value: '''{"type": "Text", "data": "example"}
-      ''', enumWidget: EnumWidget.text));
+      ''', enumWidget: EnumWidget.text,widget: TextWidget(),));
   }
 }
