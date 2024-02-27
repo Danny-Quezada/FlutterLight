@@ -10,6 +10,8 @@ void main() {
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+         splashColor: Colors.transparent,
+  highlightColor: Colors.transparent,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           fontFamily: "Onest"),

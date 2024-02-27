@@ -5,6 +5,38 @@ import 'package:flutter_drag_drop/ui/widgets/secondary/text_widget.dart';
 import 'package:flutter_drag_drop/ui/widgets/secondary/tool_widget.dart';
 import 'package:provider/provider.dart';
 
+class TitleWidget extends StatelessWidget {
+  String titleName;
+  TitleWidget({required this.titleName});
+
+  @override
+  Widget build(BuildContext context) {
+    const textStyleTitles = TextStyle(
+        color: Colors.black45, fontSize: 15, fontWeight: FontWeight.w800);
+    return SliverToBoxAdapter(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            titleName,
+            style: textStyleTitles,
+          ),
+          Divider(
+            color: Colors.grey.shade300,
+          ),
+          const SizedBox(
+            height: 10,
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class ToolsWidget extends StatelessWidget {
   ToolsWidget({
     super.key,
@@ -14,8 +46,43 @@ class ToolsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final uiProvider = Provider.of<UIProvider>(context, listen: false);
     return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
         color: Colors.white60,
-        child: ToolWidget(value: '''{"type": "Text", "data": "example"}
-      ''', enumWidget: EnumWidget.text,widget: TextWidget(),));
+        child: CustomScrollView(
+          slivers: [
+            TitleWidget(titleName: "Layouts"),
+            SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 15,
+                ),
+                delegate: SliverChildListDelegate([
+                  ToolWidget(
+                    enumWidget: EnumWidget.column,
+                  ),
+                  ToolWidget(
+                    enumWidget: EnumWidget.row,
+                  ),
+
+                ])),
+            TitleWidget(titleName: "Components"),
+             SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 15,
+                ),
+                delegate: SliverChildListDelegate([
+                  ToolWidget(
+                    enumWidget: EnumWidget.text,
+                  ),
+                   ToolWidget(
+                    enumWidget: EnumWidget.container,
+                  ),
+                 
+                ])),
+          ],
+        ));
   }
 }
