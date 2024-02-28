@@ -4,7 +4,7 @@ import 'package:flutter_drag_drop/providers/phone_provider.dart';
 import 'package:flutter_drag_drop/ui/enum/widget_enum.dart';
 import 'package:flutter_drag_drop/ui/widgets/secondary/data_widget.dart';
 import 'package:flutter_drag_drop/ui/widgets/secondary/tool_widget.dart';
-import 'package:flutter_draggable_list/flutter_draggable_list.dart';
+
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -48,12 +48,12 @@ class _ContainerPhoneState extends State<ContainerPhone> {
     final phoneProvider = Provider.of<PhoneProvider>(context, listen: true);
     return DragTarget<EnumWidget>(
       onAccept: (data) {
-        phoneProvider.changeValue(KeyedSubtree(
-          child: DataWidget(
+        phoneProvider.changeValue(
+          DataWidget(
             enumWidget: data,
+            key: Key(uuid.v4()),
           ),
-          key: Key(uuid.v4()),
-        ));
+        );
       },
       builder: (context, candidateData, rejectedData) {
         return Container(
@@ -63,18 +63,15 @@ class _ContainerPhoneState extends State<ContainerPhone> {
                 return ReorderableListView(
                   buildDefaultDragHandles: true,
                   children: List.generate(
-                      value.widgets.length,
-                      (index) => ListTile(
-                        
-                            key: Key(uuid.v4()),
-                            title: value.widgets[index],
-                          
-                          )),
+                    value.widgets.length,
+                    (index) => value.widgets[index],
+                  ),
                   onReorder: (oldIndex, newIndex) {
                     if (oldIndex < newIndex) {
                       newIndex -= 1;
                     }
-                    Widget widget = phoneProvider.widgets.removeAt(oldIndex);
+                    DataWidget widget =
+                        phoneProvider.widgets.removeAt(oldIndex);
                     phoneProvider.changeValueIndex(widget, newIndex);
                   },
                 );

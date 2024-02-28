@@ -8,7 +8,7 @@ import 'package:reorderables/reorderables.dart';
 
 class RowWidget extends StatelessWidget {
   final PhoneProvider provider;
-  RowWidget({super.key, required this.provider});
+  RowWidget({required this.provider});
 
   List<Widget> widgets = [];
 
@@ -21,10 +21,10 @@ class RowWidget extends StatelessWidget {
           return DragTarget<EnumWidget>(
             onAccept: (data) {
               provider.changeValue(
-                KeyedSubtree(
-                  child: DataWidget(enumWidget: data),
-                  key: Key(uuid.v4()),
-                ),
+               
+                 
+                   DataWidget(enumWidget: data,key: Key(uuid.v4()),),
+                
               );
             },
             builder: (context, candidateData, rejectedData) {
@@ -41,7 +41,7 @@ class RowWidget extends StatelessWidget {
                             if (oldIndex < newIndex) {
                               newIndex -= 1;
                             }
-                            Widget widget = provider.widgets.removeAt(oldIndex);
+                            DataWidget widget = provider.widgets.removeAt(oldIndex);
                             provider.changeValueIndex(widget, newIndex);
                           },
                           scrollController: ScrollController(),

@@ -1,14 +1,25 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_drag_drop/ui/widgets/secondary/data_widget.dart';
 
 class PhoneProvider extends ChangeNotifier {
-  List<Widget> widgets = [];
+  List<DataWidget> widgets = [];
   bool changeHover=false;
-  changeValue(Widget widget) {
+
+  Key key=Key("");
+
+
+
+
+
+
+  changeValue(DataWidget widget) {
     
     widgets.add(widget);
     notifyListeners();
   }
-  changeValueIndex(Widget widget, index){
+  changeValueIndex(DataWidget widget, index){
+
+    
     widgets.insert(index, widget);
     notifyListeners();
   }

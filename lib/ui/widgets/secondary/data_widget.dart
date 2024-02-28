@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_drop/providers/phone_provider.dart';
+import 'package:flutter_drag_drop/providers/style_provider.dart';
 import 'package:flutter_drag_drop/ui/enum/widget_enum.dart';
 import 'package:flutter_drag_drop/ui/widgets/secondary/column_widget.dart';
-import 'package:flutter_drag_drop/ui/widgets/secondary/container.dart';
+import 'package:flutter_drag_drop/ui/widgets/secondary/container_widget.dart';
 import 'package:flutter_drag_drop/ui/widgets/secondary/row_widget.dart';
 import 'package:flutter_drag_drop/ui/widgets/secondary/text_widget.dart';
 import 'package:flutter_drag_drop/ui/widgets/secondary/tool_widget.dart';
@@ -11,25 +12,27 @@ import 'package:provider/provider.dart';
 class DataWidget extends StatelessWidget {
   final EnumWidget enumWidget;
 
-  DataWidget({required this.enumWidget});
+  DataWidget({required this.enumWidget, Key? key}) : super(key: key);
 
   Widget? widgetData = null;
-
+  Widget? widgetCompleted = null;
   widgetFactory() {
     switch (enumWidget) {
       case EnumWidget.text:
-        widgetData = IntrinsicWidth(child: TextWidget());
-      case EnumWidget.row:
-        widgetData = IntrinsicHeight(
-          child: RowWidget(
-            provider: PhoneProvider(),
-          ),
+        widgetData = TextWidget(
+          key: key,
         );
+        widgetCompleted = IntrinsicWidth(child: widgetData);
+      case EnumWidget.row:
+        widgetData = RowWidget(
+          provider: PhoneProvider(),
+        );
+        widgetCompleted = IntrinsicHeight(child: widgetData);
       case EnumWidget.column:
-        widgetData =
-            IntrinsicHeight(child: ColumnWidget(provider: phoneProvider));
+        widgetData = ColumnWidget(provider: phoneProvider);
+        widgetCompleted = IntrinsicHeight(child: widgetData);
       case EnumWidget.container:
-        widgetData=ContainerWidget();
+        widgetCompleted = ContainerWidget();
     }
   }
 
@@ -37,11 +40,12 @@ class DataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styleProvider = Provider.of<StyleProvider>(context, listen: false);
+    final globalProvider = Provider.of<PhoneProvider>(context, listen: false);
     if (widgetData == null) {
       widgetFactory();
     }
     return InkWell(
-      key: Key(uuid.v4()),
       focusColor: Colors.transparent,
       hoverColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
@@ -51,8 +55,17 @@ class DataWidget extends StatelessWidget {
       onHover: (value) {
         phoneProvider.changeValueHover(value);
       },
-      onDoubleTap: (){
-        print("prueba");
+      onDoubleTap: () {
+        if (enumWidget == EnumWidget.text) {
+          styleProvider.valueProvider =
+              (widgetData as TextWidget).styleProvider.value;
+          styleProvider.changeEnum(this.enumWidget);
+        }
+        else if(enumWidget==EnumWidget.container){
+             styleProvider.boxDecorationProvider =
+              (widgetCompleted as ContainerWidget).styleProvider.value;
+          styleProvider.changeEnum(this.enumWidget);
+        }
       },
       child: ChangeNotifierProvider.value(
         value: phoneProvider,
@@ -64,7 +77,6 @@ class DataWidget extends StatelessWidget {
               backgroundColor:
                   Color(int.parse(widgetOptions[enumWidget]!["Color"]!)),
               child: Container(
-               
                   decoration: value.changeHover
                       ? BoxDecoration(
                           border: Border.all(
@@ -72,7 +84,7 @@ class DataWidget extends StatelessWidget {
                               color: Color(int.parse(
                                   widgetOptions[enumWidget]!["Color"]!))))
                       : null,
-                  child: widgetData),
+                  child: widgetCompleted),
             );
           },
         ),

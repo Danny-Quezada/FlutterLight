@@ -1,13 +1,11 @@
 // ignore_for_file: unnecessary_new
 
-import 'dart:math';
+
 
 import 'package:flutter/material.dart';
-import 'package:flutter_drag_drop/providers/phone_provider.dart';
+
 import 'package:flutter_drag_drop/ui/enum/widget_enum.dart';
-import 'package:flutter_drag_drop/ui/widgets/secondary/row_widget.dart';
-import 'package:flutter_drag_drop/ui/widgets/secondary/text_widget.dart';
-import 'package:provider/provider.dart';
+
 
 import 'package:uuid/uuid.dart';
 
