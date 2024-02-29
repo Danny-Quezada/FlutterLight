@@ -28,8 +28,8 @@ class PropertyWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.ads_click),
-                Text("Double tap in components")
+                Icon(Icons.ads_click,color: Colors.grey.shade400,),
+                const Text("Double tap in components")
               ],
             ),
           );
@@ -52,16 +52,16 @@ class BoxDecorationEditorWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+       const Text(
           "Editor container",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
         ),
-        Divider(),
+       const Divider(),
         Text(
           "Color: ",
           style: textStyle,
         ),
-        Divider(),
+       const Divider(),
         const SizedBox(
           height: 5,
         ),
@@ -76,7 +76,7 @@ class BoxDecorationEditorWidget extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        Divider(),
+        const Divider(),
         const SizedBox(
           height: 15,
         ),
@@ -98,19 +98,29 @@ class BoxDecorationEditorWidget extends StatelessWidget {
                   inputFormatters: <TextInputFormatter>[
                     // for below version 2 use this
                     FilteringTextInputFormatter.allow(
-                        RegExp(r'[0-9]|[1-2][0-9]|30')),
-                    // for version 2 and greater youcan also use this
-                    FilteringTextInputFormatter.digitsOnly
+                        RegExp(r'^\d+\.?\d{0,1}$')),
+                    TextInputFormatter.withFunction(
+                      (oldValue, newValue) {
+                        try {
+                          final intValue = double.parse(newValue.text);
+                          return 0.0 <= intValue && intValue <= 50.0
+                              ? newValue
+                              : oldValue;
+                        } catch (e) {
+                          return const TextEditingValue(text: "");
+                        }
+                      },
+                    ),
                   ],
                   validator: ValidarTextField.genericNumberValidator,
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                       hintText: "Radius ",
                       labelText: "Radius",
-                      icon: Icon(Icons.radio_button_unchecked_sharp),
-                      helperMaxLines: 2),
+                      icon: const Icon(Icons.radio_button_unchecked_sharp),
+                      helperMaxLines: 4),
                 ),
                 const SizedBox(
                   height: 10,
@@ -120,15 +130,25 @@ class BoxDecorationEditorWidget extends StatelessWidget {
                     styleProvider.boxDecorationProvider.width =
                         double.parse(value == "" ? "0" : value);
                   },
-                  maxLength: 3,
+                  maxLength: 5,
                   initialValue:
                       styleProvider.boxDecorationProvider.width.toString(),
                   inputFormatters: <TextInputFormatter>[
                     // for below version 2 use this
                     FilteringTextInputFormatter.allow(
-                        RegExp(r'[0-9]|[1-2][0-9]|30')),
-                    // for version 2 and greater youcan also use this
-                    FilteringTextInputFormatter.digitsOnly
+                        RegExp(r'^\d+\.?\d{0,1}$')),
+                    TextInputFormatter.withFunction(
+                      (oldValue, newValue) {
+                        try {
+                          final intValue = double.parse(newValue.text);
+                          return 0.0 <= intValue && intValue <= 350.0
+                              ? newValue
+                              : oldValue;
+                        } catch (e) {
+                          return const TextEditingValue(text: "");
+                        }
+                      },
+                    ),
                   ],
                   validator: (value) {
                     final intNumber = int.tryParse(value!);
@@ -137,14 +157,17 @@ class BoxDecorationEditorWidget extends StatelessWidget {
                     }
                     return 'Ingrese el numero';
                   },
-                  keyboardType: TextInputType.number,
+                  keyboardType:const TextInputType.numberWithOptions(decimal: true),
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                       hintText: "Width",
                       labelText: "Width",
-                      icon: Icon(Icons.width_normal),
-                      helperMaxLines: 2),
+                      icon: const Icon(Icons.width_normal),
+                      helperMaxLines: 5),
+                ),
+                const SizedBox(
+                  height: 6,
                 ),
                 TextFormField(
                   initialValue:
@@ -153,23 +176,32 @@ class BoxDecorationEditorWidget extends StatelessWidget {
                     styleProvider.boxDecorationProvider.height =
                         double.parse(value == "" ? "0" : value);
                   },
-                  maxLength: 3,
                   inputFormatters: <TextInputFormatter>[
-                    // for below version 2 use this
                     FilteringTextInputFormatter.allow(
-                        RegExp(r'[0-9]|[1-2][0-9]|30')),
-                    // for version 2 and greater youcan also use this
-                    FilteringTextInputFormatter.digitsOnly
+                        RegExp(r'^\d+\.?\d{0,1}$')),
+                    TextInputFormatter.withFunction(
+                      (oldValue, newValue) {
+                        try {
+                          final intValue = double.parse(newValue.text);
+                          return 0.0 <= intValue && intValue <= 700.0
+                              ? newValue
+                              : oldValue;
+                        } catch (e) {
+                          return const TextEditingValue(text: "");
+                        }
+                      },
+                    ),
                   ],
+                  maxLength: 5,
                   validator: ValidarTextField.genericNumberValidator,
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                       hintText: "Heigth",
                       labelText: "Height",
-                      icon: Icon(Icons.height),
-                      helperMaxLines: 2),
+                      icon:const Icon(Icons.height),
+                      helperMaxLines: 5),
                 ),
               ],
             ),

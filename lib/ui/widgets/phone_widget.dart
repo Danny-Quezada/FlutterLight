@@ -45,45 +45,54 @@ class ContainerPhone extends StatefulWidget {
 class _ContainerPhoneState extends State<ContainerPhone> {
   @override
   Widget build(BuildContext context) {
-    final phoneProvider = Provider.of<PhoneProvider>(context, listen: true);
-    return DragTarget<EnumWidget>(
-      onAccept: (data) {
-        phoneProvider.changeValue(
-          DataWidget(
-            enumWidget: data,
-            key: Key(uuid.v4()),
-          ),
-        );
-      },
-      builder: (context, candidateData, rejectedData) {
-        return Container(
-          child: Scaffold(
-            body: Consumer<PhoneProvider>(
-              builder: (context, value, child) {
-                return ReorderableListView(
-                  buildDefaultDragHandles: true,
-                  children: List.generate(
-                    value.widgets.length,
-                    (index) => value.widgets[index],
-                  ),
-                  onReorder: (oldIndex, newIndex) {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    DataWidget widget =
-                        phoneProvider.widgets.removeAt(oldIndex);
-                    phoneProvider.changeValueIndex(widget, newIndex);
-                  },
-                );
-              },
-            ),
-          ),
-          width: 278.74,
-          height: 576,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(30)),
-        );
-      },
+    final phoneProvider = Provider.of<PhoneProvider>(context, listen: false);
+    return Container(
+      child: Scaffold(
+        body: DragTarget<Object>(
+           onAccept: (data) {
+    if(data is EnumWidget){
+
+    phoneProvider.changeValue(
+      DataWidget(
+        enumWidget: data as EnumWidget,
+        key: UniqueKey(),
+      ),
+    );
+    }
+    else{
+ 
+      Map<String, Object> map=(data as Map<String,Object>);
+      phoneProvider.changeValue(DataWidget.copy(data["data"] as DataWidget,),);
+    }
+          },
+          builder: (context, candidateData, rejectedData) {
+            return Consumer<PhoneProvider>(
+            builder: (context, value, child) {
+              return ReorderableListView(
+                buildDefaultDragHandles: true,
+                children: List.generate(
+                  value.widgets.length,
+                  (index) => KeyedSubtree.wrap(value.widgets[index],index),
+                ),
+                onReorder: (oldIndex, newIndex) {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  DataWidget widget =
+                      phoneProvider.widgets.removeAt(oldIndex);
+                  phoneProvider.changeValueIndex(widget, newIndex);
+                },
+              );
+            },
+          );
+          },
+          
+        ),
+      ),
+      width: 278.74,
+      height: 576,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(30)),
     );
   }
 }

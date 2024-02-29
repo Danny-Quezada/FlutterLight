@@ -6,7 +6,15 @@ class StyleProvider extends ChangeNotifier {
   // StyleProvider styleProvider=StyleProvider();
   Key key = Key("");
   ValueProvider valueProvider = ValueProvider();
-  BoxDecorationProvider boxDecorationProvider=BoxDecorationProvider();
+  BoxDecorationProvider _boxDecorationProvider = BoxDecorationProvider();
+
+  BoxDecorationProvider get boxDecorationProvider => _boxDecorationProvider;
+
+  set boxDecorationProvider(BoxDecorationProvider value) {
+    _boxDecorationProvider = value;
+    notifyListeners();
+  }
+
   changeStyle(TextStyle style) {
     // styleProvider.textStyle.merge(style);
     valueProvider.textStyle = style;
@@ -29,11 +37,10 @@ class ValueProvider {
   TextStyle textStyle = TextStyle();
   TextAlign textAlign = TextAlign.left;
 }
-class BoxDecorationProvider{
-  int circularRadius=0;
-  Color color=Colors.white;
-  double height=0;
-  double width=0;
 
-
+class BoxDecorationProvider {
+  int circularRadius = 0;
+  Color color = Colors.white;
+  double height = 200;
+  double width = 200;
 }

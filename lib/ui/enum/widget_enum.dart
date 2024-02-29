@@ -2,5 +2,6 @@ enum EnumWidget{
   text,
   row,
   column,
-  container
+  container,
+  stack
 }

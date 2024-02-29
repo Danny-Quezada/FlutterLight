@@ -4,24 +4,26 @@ import 'package:flutter_drag_drop/providers/style_provider.dart';
 class ContainerWidget extends StatelessWidget {
   ContainerWidget({super.key});
 
-  ValueNotifier<BoxDecorationProvider> styleProvider = ValueNotifier(BoxDecorationProvider());
+  BoxDecorationProvider value = BoxDecorationProvider();
+
+  ContainerWidget.copy(ContainerWidget container) {
+    this.value.circularRadius = container.value.circularRadius;
+    this.value.color = container.value.color;
+    this.value.height = container.value.height;
+    this.value.width = container.value.width;
+    // this.value=container.value;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: styleProvider,
-      builder: (context, value, child) {
-        return Container(
-
-          width: value.width ?? 200,
-          height:value.height ?? 200,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(value.circularRadius *1.0),
-            color: value.color
-          ),
-          
-        );
-      },
+    return IgnorePointer(
+      child: Container(
+        width: value.width,
+        height: value.height,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(value.circularRadius * 1.0),
+            color: value.color),
+      ),
     );
   }
 }

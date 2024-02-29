@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_drop/providers/tool_provider.dart';
 import 'package:flutter_drag_drop/providers/ui_provider.dart';
 import 'package:flutter_drag_drop/ui/enum/widget_enum.dart';
 
@@ -30,7 +31,7 @@ class TitleWidget extends StatelessWidget {
           ),
           const SizedBox(
             height: 10,
-          )
+          ),
         ],
       ),
     );
@@ -44,7 +45,8 @@ class ToolsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final uiProvider = Provider.of<UIProvider>(context, listen: false);
+    final toolProvider = Provider.of<ToolProvider>(context, listen: false);
+
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
         color: Colors.white60,
@@ -64,10 +66,9 @@ class ToolsWidget extends StatelessWidget {
                   ToolWidget(
                     enumWidget: EnumWidget.row,
                   ),
-
                 ])),
             TitleWidget(titleName: "Components"),
-             SliverGrid(
+            SliverGrid(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   crossAxisSpacing: 20,
@@ -77,11 +78,30 @@ class ToolsWidget extends StatelessWidget {
                   ToolWidget(
                     enumWidget: EnumWidget.text,
                   ),
-                   ToolWidget(
+                  ToolWidget(
                     enumWidget: EnumWidget.container,
                   ),
-                 
                 ])),
+            TitleWidget(titleName: "Created component"),
+            Consumer<ToolProvider>(
+              builder: (context, value, child) {
+                if (toolProvider.toolWidgets.isNotEmpty) {
+                  return SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 15,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                          childCount: toolProvider.toolWidgets.length,
+                          (context, index) {
+                        return toolProvider.toolWidgets[index];
+                      }));
+                }
+                return const SliverToBoxAdapter();
+              },
+            )
           ],
         ));
   }

@@ -14,4 +14,10 @@ class ValidarTextField{
       return "Campo debe de ser un número entero";
     }
   }
+    static String? genericStringValidator(String? s) {
+    if (s == null || s.isWhitespace()) {
+      return "Required field";
+    }
+  }
+
 }
