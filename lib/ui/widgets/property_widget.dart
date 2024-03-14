@@ -45,7 +45,7 @@ class BoxDecorationEditorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = TextStyle(
+    TextStyle textStyle = const TextStyle(
         fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w800);
     final styleProvider = Provider.of<StyleProvider>(context, listen: false);
     return Column(

@@ -59,7 +59,7 @@ class StackWidget extends StatelessWidget {
                       x: localPosition.dx,
                       y: localPosition.dy),
                 );
-              } else {
+              } else if(details.data is DataWidget){
                 provider.changeValue(details.data as DataWidget);
               }
             },

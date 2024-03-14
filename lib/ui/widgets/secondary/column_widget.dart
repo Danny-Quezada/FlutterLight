@@ -27,16 +27,14 @@ class ColumnWidget extends StatelessWidget {
                 provider.changeValue(
                   DataWidget(enumWidget: data),
                 );
-              } else {
-                provider.changeValue(data as DataWidget);
+              } else if (data is DataWidget) {
+                provider.changeValue(data);
               }
             },
             builder: (context, candidateData, rejectedData) {
               return IntrinsicHeight(
                   child: provider.widgets.isEmpty
-                      ? Container(
-                          child: Text("column is empty"),
-                        )
+                      ? const Text("column is empty")
                       : SizedBox(
                           height: double.infinity,
                           child: Padding(

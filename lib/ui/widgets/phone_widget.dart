@@ -70,7 +70,7 @@ class _ContainerPhoneState extends State<ContainerPhone> {
             return Consumer<PhoneProvider>(
               builder: (context, value, child) {
                 return ReorderableListView(
-                  buildDefaultDragHandles: true,
+               
                   children: List.generate(
                     value.widgets.length,
                     (index) => KeyedSubtree.wrap(value.widgets[index], index),

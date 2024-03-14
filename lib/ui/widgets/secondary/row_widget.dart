@@ -10,18 +10,12 @@ import 'package:reorderables/reorderables.dart';
 class RowWidget extends StatelessWidget {
   PhoneProvider? provider;
   RowWidget({required this.provider});
-RowWidget.copy(RowWidget rowWidget){
-    this.provider=PhoneProvider();
-    this.provider!.widgets= rowWidget.provider!.widgets.map((widget) { 
-     
-        return DataWidget.copy(widget);
-      
-     
-      }).toList();
-    
-  
+  RowWidget.copy(RowWidget rowWidget) {
+    this.provider = PhoneProvider();
+    this.provider!.widgets = rowWidget.provider!.widgets.map((widget) {
+      return DataWidget.copy(widget);
+    }).toList();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,42 +25,43 @@ RowWidget.copy(RowWidget rowWidget){
         builder: (context, provider, _) {
           return DragTarget<Object>(
             onAccept: (data) {
-              if(data is EnumWidget){
-              provider.changeValue(
-               
-                 
-                   DataWidget(enumWidget: data,),
-                
-              );
+              if (data is EnumWidget) {
+                provider.changeValue(
+                  DataWidget(
+                    enumWidget: data,
+                  ),
+                );
+              } else if(data is DataWidget){
+                provider.changeValue(data);
               }
-              else{
-                provider.changeValue(data as DataWidget);
-              }
-
             },
             builder: (context, candidateData, rejectedData) {
-              return
-                 IntrinsicHeight(child: provider.widgets.isEmpty ? Container(
-                      child: Text("Row is empty"),
-                    )
-                  : SizedBox(
-                      height: double.infinity,
-                      child: Padding(
-                        padding: EdgeInsets.all(6),
-                        child: ReorderableRow(
-                          onReorder: (oldIndex, newIndex) {
-                            if (oldIndex < newIndex) {
-                              newIndex -= 1;
-                            }
-                            DataWidget widget = provider.widgets.removeAt(oldIndex);
-                            provider.changeValueIndex(widget, newIndex);
-                          },
-                          scrollController: ScrollController(),
-                          children: List.generate(provider.widgets.length, (index) => KeyedSubtree.wrap(provider.widgets[index],index)),
-                        ),
-                      ),
-                    )
-                 );
+              return IntrinsicHeight(
+                  child: provider.widgets.isEmpty
+                      ? Container(
+                          child: Text("Row is empty"),
+                        )
+                      : SizedBox(
+                          height: double.infinity,
+                          child: Padding(
+                            padding: EdgeInsets.all(6),
+                            child: ReorderableRow(
+                              onReorder: (oldIndex, newIndex) {
+                                if (oldIndex < newIndex) {
+                                  newIndex -= 1;
+                                }
+                                DataWidget widget =
+                                    provider.widgets.removeAt(oldIndex);
+                                provider.changeValueIndex(widget, newIndex);
+                              },
+                              scrollController: ScrollController(),
+                              children: List.generate(
+                                  provider.widgets.length,
+                                  (index) => KeyedSubtree.wrap(
+                                      provider.widgets[index], index)),
+                            ),
+                          ),
+                        ));
             },
           );
         },
