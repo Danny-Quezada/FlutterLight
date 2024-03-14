@@ -11,8 +11,7 @@ class PhoneProvider extends ChangeNotifier {
   Key key = Key("");
 
   changeValue(DataWidget widget) {
-    if (widget.enumWidget == EnumWidget.row ||
-        widget.enumWidget == EnumWidget.column) {}
+    
     widgets.add(widget);
 
     notifyListeners();

@@ -283,6 +283,7 @@ class TextStyleEditorWidget extends StatelessWidget {
 List<Color> paletteColors = [
   Colors.black,
   Colors.white,
+  Colors.grey,
   Color(int.parse('0xffEA2027')),
   Color(int.parse('0xff006266')),
   Color(int.parse('0xff1B1464')),

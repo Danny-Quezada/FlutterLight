@@ -45,6 +45,7 @@ class ToolsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final toolProvider = Provider.of<ToolProvider>(context, listen: false);
 
     return Container(
@@ -66,6 +67,7 @@ class ToolsWidget extends StatelessWidget {
                   ToolWidget(
                     enumWidget: EnumWidget.row,
                   ),
+                  ToolWidget(enumWidget: EnumWidget.stack)
                 ])),
             TitleWidget(titleName: "Components"),
             SliverGrid(

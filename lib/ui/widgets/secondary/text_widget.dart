@@ -12,38 +12,36 @@ class TextWidget extends StatelessWidget {
   TextStyle textStyle = const TextStyle(
     color: Colors.black,
   );
-TextWidget.copy(TextWidget textWidget){
-   this.styleProvider.value.textAlign=textWidget.styleProvider.value.textAlign;
-   this.styleProvider.value.textStyle=textWidget.styleProvider.value.textStyle;
-   this.textEditingController.value=textWidget.textEditingController.value;
-    
-  
+  TextWidget.copy(TextWidget textWidget) {
+    this.styleProvider.value.textAlign =
+        textWidget.styleProvider.value.textAlign;
+    this.styleProvider.value.textStyle =
+        textWidget.styleProvider.value.textStyle;
+    this.textEditingController.value = textWidget.textEditingController.value;
   }
   @override
   Widget build(BuildContext context) {
-    
-    return ValueListenableBuilder(
-      key: key,
-      builder: (context, value, child) {
-        return IntrinsicWidth(
-          child: TextField(
-            textAlign: styleProvider.value.textAlign,
-          selectionHeightStyle: BoxHeightStyle.tight,
-          maxLines: null,
-          keyboardType: TextInputType.multiline,
-          style: styleProvider.value.textStyle,
-          decoration: const InputDecoration(
-              border: InputBorder.none,
-              isDense: true,
-              hintText: "Text",
-          
-              contentPadding: EdgeInsets.zero),
-          controller:textEditingController,
-                ),
-        );
-      },
-      valueListenable: styleProvider,
-      
+    return ChangeNotifierProvider.value(
+      value: styleProvider,
+      child: IntrinsicWidth(
+        child: Consumer<StyleProvider>(
+          builder: (context, value, child) {
+            return TextField(
+              textAlign: styleProvider.value.textAlign,
+              selectionHeightStyle: BoxHeightStyle.tight,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              style: styleProvider.value.textStyle,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  isDense: true,
+                  hintText: "Text",
+                  contentPadding: EdgeInsets.zero),
+              controller: textEditingController,
+            );
+          },
+        ),
+      ),
     );
   }
 }

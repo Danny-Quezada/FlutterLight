@@ -31,12 +31,13 @@ class DataWidget extends StatelessWidget {
     if (dataWidget.widgetData is TextWidget) {
       this.widgetData = TextWidget.copy(dataWidget.widgetData as TextWidget);
     }
-    if(dataWidget.widgetData is StackWidget){
-      this.widgetData=StackWidget.copy(dataWidget.widgetData as StackWidget);
+    if (dataWidget.widgetData is StackWidget) {
+      this.widgetData = StackWidget.copy(dataWidget.widgetData as StackWidget);
     }
     this.enumWidget = dataWidget.enumWidget;
     this.phoneProvider = PhoneProvider();
-
+    this.x = dataWidget.x;
+    this.y = dataWidget.y;
     DataWidget data = DataWidget(enumWidget: dataWidget.enumWidget);
     data.key = UniqueKey();
     // if (dataWidget.widgetData is RowWidget) {
@@ -46,10 +47,12 @@ class DataWidget extends StatelessWidget {
     data.enumWidget = dataWidget.enumWidget;
     data.phoneProvider = PhoneProvider();
   }
-
+  double? x;
+  double? y;
   EnumWidget? enumWidget;
   Key? key;
-  DataWidget({required this.enumWidget, this.key, this.widgetData})
+  DataWidget(
+      {required this.enumWidget, this.key, this.widgetData, this.x, this.y})
       : super(key: key) {
     phoneProvider = PhoneProvider();
   }
@@ -69,7 +72,7 @@ class DataWidget extends StatelessWidget {
       case EnumWidget.container:
         widgetData = ContainerWidget();
       case EnumWidget.stack:
-        widgetData=StackWidget(provider: PhoneProvider());
+        widgetData = StackWidget(provider: PhoneProvider());
     }
   }
 
@@ -87,9 +90,6 @@ class DataWidget extends StatelessWidget {
       Offset.zero & overlay.size,
     );
 
-    double left = offset.dx;
-    
-    double top = offset.dy;
     await showMenu(
       context: context,
       position: //.fromLTRB(left, top, 0, 0),
@@ -183,9 +183,7 @@ class DataWidget extends StatelessWidget {
       focusColor: Colors.transparent,
       hoverColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
-      onTap: () {
-        print(enumWidget);
-      },
+
       onHover: (value) {
         phoneProvider.changeValueHover(value);
       },
@@ -196,8 +194,8 @@ class DataWidget extends StatelessWidget {
           styleProvider.changeEnum(enumWidget!);
         } else if (enumWidget == EnumWidget.container) {
           styleProvider.boxDecorationProvider =
-              (this.widgetData as ContainerWidget).value;
-
+              (this.widgetData as ContainerWidget).value.value;
+    
           styleProvider.changeEnum(enumWidget!);
         }
       },

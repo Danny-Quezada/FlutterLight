@@ -49,44 +49,44 @@ class _ContainerPhoneState extends State<ContainerPhone> {
     return Container(
       child: Scaffold(
         body: DragTarget<Object>(
-           onAccept: (data) {
-    if(data is EnumWidget){
-
-    phoneProvider.changeValue(
-      DataWidget(
-        enumWidget: data as EnumWidget,
-        key: UniqueKey(),
-      ),
-    );
-    }
-    else{
- 
-      Map<String, Object> map=(data as Map<String,Object>);
-      phoneProvider.changeValue(DataWidget.copy(data["data"] as DataWidget,),);
-    }
+          onAccept: (data) {
+            if (data is EnumWidget) {
+              phoneProvider.changeValue(
+                DataWidget(
+                  enumWidget: data as EnumWidget,
+                  key: UniqueKey(),
+                ),
+              );
+            } else {
+              Map<String, Object> map = (data as Map<String, Object>);
+              phoneProvider.changeValue(
+                DataWidget.copy(
+                  data["data"] as DataWidget,
+                ),
+              );
+            }
           },
           builder: (context, candidateData, rejectedData) {
             return Consumer<PhoneProvider>(
-            builder: (context, value, child) {
-              return ReorderableListView(
-                buildDefaultDragHandles: true,
-                children: List.generate(
-                  value.widgets.length,
-                  (index) => KeyedSubtree.wrap(value.widgets[index],index),
-                ),
-                onReorder: (oldIndex, newIndex) {
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  DataWidget widget =
-                      phoneProvider.widgets.removeAt(oldIndex);
-                  phoneProvider.changeValueIndex(widget, newIndex);
-                },
-              );
-            },
-          );
+              builder: (context, value, child) {
+                return ReorderableListView(
+                  buildDefaultDragHandles: true,
+                  children: List.generate(
+                    value.widgets.length,
+                    (index) => KeyedSubtree.wrap(value.widgets[index], index),
+                  ),
+                  onReorder: (oldIndex, newIndex) {
+                    if (oldIndex < newIndex) {
+                      newIndex -= 1;
+                    }
+                    DataWidget widget =
+                        phoneProvider.widgets.removeAt(oldIndex);
+                    phoneProvider.changeValueIndex(widget, newIndex);
+                  },
+                );
+              },
+            );
           },
-          
         ),
       ),
       width: 278.74,

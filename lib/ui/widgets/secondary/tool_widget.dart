@@ -26,6 +26,10 @@ Map<EnumWidget, Map<String, String>> widgetOptions = {
   EnumWidget.container: {
     "Image": "assets/images/widgets/container_widget.png",
     "Color": "0xff9195F6"
+  },
+  EnumWidget.stack: {
+    "Image": "assets/images/widgets/stack_widget.png",
+    "Color": "0xffF72798"
   }
 };
 

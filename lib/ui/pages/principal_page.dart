@@ -20,7 +20,6 @@ class PrincipalPage extends StatelessWidget {
         ),
         Area(
           minimalSize: 299.74,
-         
         ),
         Area(
           weight: uiProvider.propertyWidth,
@@ -39,6 +38,11 @@ class PrincipalPage extends StatelessWidget {
                 highlightedColor: Colors.indigo[900]!)),
         child: multiSplitView);
     final size = MediaQuery.of(context).size;
-    return Scaffold(body: theme);
+    return Scaffold(
+        body: size.width < 600
+            ? const Center(
+                child: Text("Size is so small 😢"),
+              )
+            : theme);
   }
 }

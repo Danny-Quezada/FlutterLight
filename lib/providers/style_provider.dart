@@ -18,7 +18,7 @@ class StyleProvider extends ChangeNotifier {
   changeStyle(TextStyle style) {
     // styleProvider.textStyle.merge(style);
     valueProvider.textStyle = style;
-    //notifyListeners();
+    notifyListeners();
   }
 
   changeEnum(EnumWidget enumWidgetChanged) {
@@ -38,9 +38,38 @@ class ValueProvider {
   TextAlign textAlign = TextAlign.left;
 }
 
-class BoxDecorationProvider {
-  int circularRadius = 0;
-  Color color = Colors.white;
-  double height = 200;
-  double width = 200;
+class BoxDecorationProvider with ChangeNotifier {
+  int _circularRadius = 0;
+
+  int get circularRadius => _circularRadius;
+
+  set circularRadius(int value) {
+    _circularRadius = value;
+    notifyListeners();
+  }
+  Color _color = Colors.white;
+
+  Color get color => _color;
+
+  set color(Color value) {
+    _color = value;
+    notifyListeners();
+  }
+
+  double _height = 200;
+
+  double get height => _height;
+
+  set height(double value) {
+    _height = value;
+    notifyListeners();
+  }
+  double _width = 200;
+
+  double get width => _width;
+
+  set width(double value) {
+    _width = value;
+    notifyListeners();
+  }
 }

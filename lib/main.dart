@@ -9,15 +9,16 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (_) => BoxDecorationProvider()),
       ChangeNotifierProvider(create: (_) => UIProvider()),
       ChangeNotifierProvider(create: (_) => PhoneProvider()),
       ChangeNotifierProvider(create: (_) => StyleProvider()),
-      ChangeNotifierProvider(create: (_)=>ToolProvider())
+      ChangeNotifierProvider(create: (_) => ToolProvider())
     ],
     child: MaterialApp(
+      title: "FlutterBuild",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
