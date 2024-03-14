@@ -16,7 +16,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => ToolProvider())
     ],
     child: MaterialApp(
-      title: "FlutterBuild",
+      title: "Flutter Light",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           splashColor: Colors.transparent,
